@@ -1,0 +1,100 @@
+#main_content {
+    background-image: linear-gradient(to right, rgba(52, 148, 230, 0.8), rgba(236, 110, 173, 0.8)), url("../../imgs/image_1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+}
+
+#main_content form {
+    background: white;
+    margin: 0 auto;
+}
+#main_content .hidden {
+    display: none;
+}
+
+#main_content .blurb {
+    color:white;
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.4),
+    0px 8px 13px rgba(0,0,0,0.1),
+    0px 18px 23px rgba(0,0,0,0.1);
+}
+
+.navbar-brand span {
+    color: #f542a7;
+}
+
+.feature-box {
+    border: 1px solid grey;
+    text-align: center;
+    background: rgba(232, 106, 97, 0.75);
+}
+
+.contact-form {
+    background-image: linear-gradient(to right,rgba(59, 57, 58, 0.9), rgba(59, 57, 60, 0.9) ), url("../../imgs/enter_2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 400px;
+    color: white;
+}
+
+.creator-heading {
+    font-family: Dancing Script;
+    font-weight: bold;
+}
+.creators {
+    background-image: linear-gradient(to right,rgba(59, 57, 58, 0.9), rgba(59, 57, 60, 0.9) );
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.navbar.scrolled {
+    background: rgba(59, 57, 58, 0.8);
+    transition: background 500ms;
+}
+
+hr.style-eight {
+    overflow: visible; /* For IE */
+    padding: 0;
+    border: none;
+    border-top: medium double #333;
+    color: #333;
+    text-align: center;
+}
+hr.style-eight:after {
+    content: "§";
+    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 1.5em;
+    padding: 0 0.25em;
+    background: white;
+}
+hr.style-two {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+hr.style-seven {
+    overflow: visible; /* For IE */
+    height: 30px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+}
+hr.style-seven:before { /* Not really supposed to work, but does */
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+}
