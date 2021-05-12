@@ -1,3 +1,22 @@
+<?php
+$host="localhost";
+$user="root";
+$pass="";
+$dbname="easyride";
+$conn=mysqli_connect($host,$user,$pass,$dbname);
+
+if(empty($_SESSION)) //if the session not yet started
+{
+     session_start();
+     if(!isset($_SESSION['username']))
+     header("location:http://localhost/easyride/functionalities/login_signup/login/index.html");
+}
+else if(!isset($_SESSION['username']))
+{
+header("location:http://localhost/easyride/functionalities/login_signup/login/index.html");
+exit;
+}
+?>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -17,7 +36,7 @@
         <!-- navigation bar -->
         <nav id = "main_nav" class="navbar navbar-expand-lg navbar-light bg-light fixed-top py-0">
             <div class="container-fluid">
-                    <a class="navbar-brand" href="../easyRide.html"><i class="fas fa-biking"></i> EASY<span>RIDE</span></a>
+                    <a class="navbar-brand" href="./userHome.php"><i class="fas fa-biking"></i> EASY<span>RIDE</span></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                     </button>
@@ -25,26 +44,32 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item active">
-                            <a class="nav-link" href="carslist.html">Cars<span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="http://localhost/easyride/views/carslist.php">Cars<span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="bikeslist.html">Bikes<span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="http://localhost/easyride/views/bikeslist.php">Bikes<span class="sr-only">(current)</span></a>
                                 </li>
                             <li class="nav-item">
-                            <a class="nav-link" href="userHome.html">Dashboard</a>
+                            <a class="nav-link" href="userHome.php">Dashboard</a>
                             </li>
                         </ul>
-                        <ul class="navbar-nav navbar-right">
-
+                        <ul class="navbar-nav navbar-right">  
                                 <li class="nav-item">
-                                        <a class = "nav-link" href="../functionalities/login_signup/login/index.html"><i class ="fas fa-sign-in-alt"></i> Login </a>
+                                    <a class = "nav-link" href="../functionalities/login_signup/login/index.html"><?php echo "signed in as " .$_SESSION["username"];?> </a>
                                 </li>                       
+                                <?php if(!isset($_SESSION['username'])) { ?>
+                                   <li class="nav-item">
+                                    <a class = "nav-link" href="../functionalities/login_signup/login/index.html"><i class ="fas fa-sign-in-alt"></i> Login </a>
+                                    </li>                       
+                                    <li class="nav-item">
+                                    <a class = "nav-link" href="../functionalities/login_signup/sign_up/index.html"><i class ="fas fa-user-plus"></i> Sign Up </a>
+                                    </li>
+                                <?php } 
+                                else { ?>
                                 <li class="nav-item">
-                                        <a class = "nav-link" href="../functionalities/login_signup/sign_up/index.html"><i class ="fas fa-user-plus"></i> Sign Up </a>
+                                        <a class = "nav-link" href="./logout.php"><i class ="fas fa-sign-out-alt"></i> Logout </a>
                                 </li>
-                                <li class="nav-item">
-                                        <a class = "nav-link" href="#"><i class ="fas fa-sign-out-alt"></i> Logout </a>
-                                </li>
+                                <?php } ?>
                         </ul>
                     </div>
             </div>
@@ -57,7 +82,7 @@
             <div class="sidebar-sticky">
               <ul class="nav flex-column">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#">
+                  <a class="nav-link active" href="userHome.php">
                     <i class="fas fa-home"></i>
                     Dashboard <span class="sr-only">(current)</span>
                   </a>
@@ -69,9 +94,15 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="http://localhost/easyride/views/userprofile.php">
                     <i class="fas fa-id-badge"></i>
                     User Profile
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="http://localhost/easyride/views/becomeowner.php">
+                    <i class="fas fa-wallet"></i>
+                      Earn With Easyride
                   </a>
                 </li>
                 <li class="nav-item">
@@ -91,7 +122,7 @@
                                 <img class="card-img-top" src="../imgs/car_1.jpg" alt="Card image cap">
                                 <div class="card-body">
                                   <h5 class="card-title">Cars</h5>
-                                  <a href="carslist.html" class="btn btn-dark">Book Now</a>
+                                  <a href="http://localhost/easyride/views/carslist.php" class="btn btn-dark">Book Now</a>
                                 </div>
                               </div>                    
                 </div>
@@ -100,7 +131,7 @@
                                 <img class="card-img-top" src="../imgs/bike_1.jpg" alt="Card image cap">
                                 <div class="card-body">
                                   <h5 class="card-title">Bikes</h5>
-                                  <a href="bikeslist.html" class="btn btn-dark">Book Now</a>
+                                  <a href="http://localhost/easyride/views/bikeslist.php" class="btn btn-dark">Book Now</a>
                                 </div>
                         </div>                    
                 </div>
@@ -111,8 +142,50 @@
                 <hr class="style-two">
                 <h1 class="diplay-1 text-center">History</h1>
                 <hr class="style-two">
-                <ul id="history-list">
-                </ul>
+                <div id="history-list" class="card-footer">
+                <hr> 
+                    <div class="row">
+                    <?php
+                    $username = $_SESSION["username"];
+                        $q1 = "select user_id from user where username = '$username'";
+                        $q2 = mysqli_query($conn,$q1);
+                        $d = mysqli_fetch_assoc($q2);
+                        $user_id = $d["user_id"];
+                        $q3 = "select * from order_history where user_id = '$user_id'";
+                        $q4 = mysqli_query($conn,$q3);
+                        if(mysqli_num_rows($q4)>0)
+                        {	
+                            while($d=mysqli_fetch_assoc($q4)) {
+                             echo "<div class=\"col-md-12\"> 
+                                <span> Order Id:".$d["order_id"]."</span> <span class =\"float-right\">Order Date :-". $d["o_date"]." </span> <p>Vehicle No. :- ".$d["vehicle_id"]."<span class = \"float-right\"> Return Date :-".$d["r_date"]."</span></p>";
+                                $var = $d["vehicle_id"];
+                                $nq = "select * from vehicle_m where vehicle_id  = '$var'";
+                                $search = mysqli_query($conn, $nq);
+                                $result = mysqli_fetch_assoc($search);
+                                $d_vehicle_id = $d["vehicle_id"];
+
+                                // finding out the charge for the vehicle 
+                                $qcharge = "select charge from vehicle_m where vehicle_id = '$d_vehicle_id'";
+                                $querycharge = mysqli_query($conn, $qcharge);
+                                $resultcharge = mysqli_fetch_assoc($querycharge);
+
+                                // finding out total number of days
+                                $start = strtotime($d["o_date"]);
+                                $end = strtotime($d["r_date"]);
+                                $days = round(abs($end - $start) / 86400);
+                                $total_cost = $days * $resultcharge["charge"];
+                                if($result["type"] == "car") {
+                                    echo "<h5>type : car </h5><span> Total Cost :-".$total_cost."</span><hr class=\"style-two\">";  
+                                } else {
+                                    echo "<h5>type : bike </h5><span> Total Cost :-".$total_cost."</span><hr class=\"style-two\">";
+                                }?>
+                            </div>   
+                           <?php } 
+                        } else { ?> 
+                            <li>no bookings done yet </li>
+                        <?php }
+                    ?>
+                </div>
             </div>
           </main>
         </div>

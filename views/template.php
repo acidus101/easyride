@@ -1,3 +1,22 @@
+<?php
+$host="localhost";
+$user="root";
+$pass="";
+$dbname="easyride";
+$conn=mysqli_connect($host,$user,$pass,$dbname);
+
+if(empty($_SESSION)) //if the session not yet started
+{
+     session_start();
+     if(!isset($_SESSION['username']))
+     header("location:http://localhost/easyride/functionalities/login_signup/login/index.html");
+}
+else if(!isset($_SESSION['username']))
+{
+header("location:http://localhost/easyride/functionalities/login_signup/login/index.html");
+exit;
+}
+?>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -13,11 +32,11 @@
   <title>EASYRIDE</title>
 </head>
 <body>
-    <section id ="header"  class="my-5">
+    <section id ="header" class="my-5">
         <!-- navigation bar -->
         <nav id = "main_nav" class="navbar navbar-expand-lg navbar-light bg-light fixed-top py-0">
             <div class="container-fluid">
-                    <a class="navbar-brand" href="easyRide.html"><i class="fas fa-biking"></i> EASY<span>RIDE</span></a>
+                    <a class="navbar-brand" href="../easyRide.html"><i class="fas fa-biking"></i> EASY<span>RIDE</span></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                     </button>
@@ -35,23 +54,31 @@
                             </li>
                         </ul>
                         <ul class="navbar-nav navbar-right">
-
                                 <li class="nav-item">
-                                        <a class = "nav-link" href="functionalities/login_signup/login/index.html"><i class ="fas fa-sign-in-alt"></i> Login </a>
-                                </li>                       
+                                    <a class = "nav-link" href="../functionalities/login_signup/login/index.html"><?php echo "signed in as " .$_SESSION["username"];?> </a>
+                                </li> 
+                                <?php if(!isset($_SESSION['username'])) { ?>
+                                   <li class="nav-item">
+                                    <a class = "nav-link" href="../functionalities/login_signup/login/index.html"><i class ="fas fa-sign-in-alt"></i> Login </a>
+                                    </li>                       
+                                    <li class="nav-item">
+                                    <a class = "nav-link" href="../functionalities/login_signup/sign_up/index.html"><i class ="fas fa-user-plus"></i> Sign Up </a>
+                                    </li>
+                                <?php } 
+                                else { ?>
                                 <li class="nav-item">
-                                        <a class = "nav-link" href="functionalities/login_signup/sign_up/index.html"><i class ="fas fa-user-plus"></i> Sign Up </a>
+                                        <a class = "nav-link" href="./logout.php"><i class ="fas fa-sign-out-alt"></i> Logout </a>
                                 </li>
-                                <li class="nav-item">
-                                        <a class = "nav-link" href="#"><i class ="fas fa-sign-out-alt"></i> Logout </a>
-                                </li>
+                                <?php } ?>
                         </ul>
                     </div>
             </div>
         </nav>
     </section>
-
-
+                                
+    <?php
+    $datetime = strtotime($MySQLDateResponse);
+    echo date("y-m-d", $datetime)?>
    
     <!-- footer -->
     <hr class="style-eight" >
@@ -68,3 +95,5 @@
 
 </body>
 </html>
+
+

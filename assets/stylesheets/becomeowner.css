@@ -1,0 +1,16 @@
+body {
+    background-image: linear-gradient(to right,rgba(59, 57, 58, 0.9), rgba(59, 57, 60, 0.9) ), url("../../imgs/enter_2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 400px;
+    color: white;
+}
+#model_small {
+    color: white;
+}
+hr.style-two {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}

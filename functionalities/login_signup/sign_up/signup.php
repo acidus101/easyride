@@ -8,13 +8,13 @@ $conn = mysqli_connect($host,$user,$pass,$dbname);
 if(isset($_POST["submit"])) {
     $name = $_POST["name"];
     $username = $_POST["username"];
-    $password = password_hash($_POST["password"] , PASSWORD_ARGON2I);
+    $password = password_hash($_POST["password"] , PASSWORD_DEFAULT);
     $email = $_POST["email"];
     $phone = $_POST["phone"];
     $dob = $_POST["dob"];
 }
 
-$s2="select password from user where username='$username'";
+$s2="select * from user where username = '$username'";
 $q2=mysqli_query($conn,$s2);
 
 if(mysqli_num_rows($q2)>0){
@@ -23,15 +23,15 @@ if(mysqli_num_rows($q2)>0){
     exit;
 
 } else {
-    $s1="insert into signin values('$user_id','$password')";
-    $q1=mysqli_query($conn,$s1);
-
-    $s3="insert into user(name,phone,email,password,dob,username)
+    $s3="insert into user(name,phone,email,pass,dob,username)
     values('$name','$phone','$email','$password','$dob','$username')";
     $q3=mysqli_query($conn,$s3);
-
-    header('location:http://localhost/easyride/views/userHome.html');
-    exit;
+    if($q3) {
+        header('location:http://localhost/easyride/views/userHome.php');
+        exit;
+    }else {
+        echo"<script type='text/javascript'>alert('there was a problem submittiong the record');</script>";
+    }
 }
 
 ?>
